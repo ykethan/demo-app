@@ -1,18 +1,18 @@
-import Link from "next/link";
-import Layout from "@/components/layout";
-import { listPosts } from "@/lib/tmp/list-posts";
-import PostList from "@/components/post-list";
-import { data } from "@/lib/data";
-import type { Schema } from "../../amplify/data/resource";
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import Link from 'next/link'
+import Layout from '@/components/layout'
+import { listPosts } from '@/lib/tmp/list-posts'
+import PostList from '@/components/post-list'
+import { data } from '@/lib/data'
+import type { Schema } from '../../amplify/data/resource'
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 
 type HomePageProps = {
-  posts: Schema["Post"][];
+  posts: Schema['Post'][]
   /**
    * Next page token
    */
-  next: string | null;
-};
+  next: string | null
+}
 
 export default function HomePage({ posts, next }: HomePageProps) {
   return (
@@ -24,17 +24,17 @@ export default function HomePage({ posts, next }: HomePageProps) {
         </div>
       ) : null}
     </Layout>
-  );
+  )
 }
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<GetServerSidePropsResult<HomePageProps>> {
-  const { p } = context.query;
-  if (p && typeof p !== "string") {
-    throw new Error("Invalid page token");
+  const { p } = context.query
+  if (p && typeof p !== 'string') {
+    throw new Error('Invalid page token')
   }
-  const { posts, next } = await listPosts(p, 30);
+  const { posts, next } = await listPosts(p, 30)
   // @TODO: swap these once we can flip auth modes on `.list()`
   // const tbposts = await data.models.Post.list({
   //   filter: {},
@@ -42,5 +42,5 @@ export async function getServerSideProps(
   // console.log({ tbposts })
   return {
     props: { posts, next },
-  };
+  }
 }
