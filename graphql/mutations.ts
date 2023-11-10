@@ -13,15 +13,11 @@ export const createComment = /* GraphQL */ `
       content
       createdAt
       id
-      owner
       post {
         author
-        body
+        content
         createdAt
         id
-        link
-        linkHostname
-        owner
         title
         updatedAt
         __typename
@@ -43,16 +39,13 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(condition: $condition, input: $input) {
       author
-      body
       comments {
         nextToken
         __typename
       }
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -70,15 +63,11 @@ export const deleteComment = /* GraphQL */ `
       content
       createdAt
       id
-      owner
       post {
         author
-        body
+        content
         createdAt
         id
-        link
-        linkHostname
-        owner
         title
         updatedAt
         __typename
@@ -100,16 +89,13 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(condition: $condition, input: $input) {
       author
-      body
       comments {
         nextToken
         __typename
       }
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -127,15 +113,11 @@ export const updateComment = /* GraphQL */ `
       content
       createdAt
       id
-      owner
       post {
         author
-        body
+        content
         createdAt
         id
-        link
-        linkHostname
-        owner
         title
         updatedAt
         __typename
@@ -157,16 +139,13 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(condition: $condition, input: $input) {
       author
-      body
       comments {
         nextToken
         __typename
       }
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename

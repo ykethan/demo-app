@@ -8,26 +8,18 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
-  $author: String
-  $filter: ModelSubscriptionCommentFilterInput
-  $owner: String
-) {
-  onCreateComment(author: $author, filter: $filter, owner: $owner) {
+export const onCreateComment = /* GraphQL */ `subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
+  onCreateComment(filter: $filter) {
     author
     commentRepliesId
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -45,23 +37,16 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
   APITypes.OnCreateCommentSubscriptionVariables,
   APITypes.OnCreateCommentSubscription
 >;
-export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
-  $author: String
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onCreatePost(author: $author, filter: $filter, owner: $owner) {
+export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
+  onCreatePost(filter: $filter) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename
@@ -71,26 +56,18 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
   APITypes.OnCreatePostSubscriptionVariables,
   APITypes.OnCreatePostSubscription
 >;
-export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
-  $author: String
-  $filter: ModelSubscriptionCommentFilterInput
-  $owner: String
-) {
-  onDeleteComment(author: $author, filter: $filter, owner: $owner) {
+export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filter: ModelSubscriptionCommentFilterInput) {
+  onDeleteComment(filter: $filter) {
     author
     commentRepliesId
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -108,23 +85,16 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
   APITypes.OnDeleteCommentSubscriptionVariables,
   APITypes.OnDeleteCommentSubscription
 >;
-export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
-  $author: String
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onDeletePost(author: $author, filter: $filter, owner: $owner) {
+export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
+  onDeletePost(filter: $filter) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename
@@ -134,26 +104,18 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
   APITypes.OnDeletePostSubscriptionVariables,
   APITypes.OnDeletePostSubscription
 >;
-export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
-  $author: String
-  $filter: ModelSubscriptionCommentFilterInput
-  $owner: String
-) {
-  onUpdateComment(author: $author, filter: $filter, owner: $owner) {
+export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment($filter: ModelSubscriptionCommentFilterInput) {
+  onUpdateComment(filter: $filter) {
     author
     commentRepliesId
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -171,23 +133,16 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
   APITypes.OnUpdateCommentSubscriptionVariables,
   APITypes.OnUpdateCommentSubscription
 >;
-export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
-  $author: String
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onUpdatePost(author: $author, filter: $filter, owner: $owner) {
+export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
+  onUpdatePost(filter: $filter) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename

@@ -18,15 +18,11 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -50,16 +46,13 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
 ) {
   createPost(condition: $condition, input: $input) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename
@@ -79,15 +72,11 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -111,16 +100,13 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
 ) {
   deletePost(condition: $condition, input: $input) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename
@@ -140,15 +126,11 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -172,16 +154,13 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
 ) {
   updatePost(condition: $condition, input: $input) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename

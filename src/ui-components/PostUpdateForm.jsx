@@ -21,17 +21,11 @@ export default function PostUpdateForm(props) {
   const initialValues = {
     author: "",
     title: "",
-    body: "",
-    link: "",
-    linkHostname: "",
+    content: "",
   };
   const [author, setAuthor] = React.useState(initialValues.author);
   const [title, setTitle] = React.useState(initialValues.title);
-  const [body, setBody] = React.useState(initialValues.body);
-  const [link, setLink] = React.useState(initialValues.link);
-  const [linkHostname, setLinkHostname] = React.useState(
-    initialValues.linkHostname
-  );
+  const [content, setContent] = React.useState(initialValues.content);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = postRecord
@@ -39,9 +33,7 @@ export default function PostUpdateForm(props) {
       : initialValues;
     setAuthor(cleanValues.author);
     setTitle(cleanValues.title);
-    setBody(cleanValues.body);
-    setLink(cleanValues.link);
-    setLinkHostname(cleanValues.linkHostname);
+    setContent(cleanValues.content);
     setErrors({});
   };
   const [postRecord, setPostRecord] = React.useState(postModelProp);
@@ -63,9 +55,7 @@ export default function PostUpdateForm(props) {
   const validations = {
     author: [],
     title: [{ type: "Required" }],
-    body: [],
-    link: [{ type: "URL" }],
-    linkHostname: [],
+    content: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -95,9 +85,7 @@ export default function PostUpdateForm(props) {
         let modelFields = {
           author: author ?? null,
           title,
-          body: body ?? null,
-          link: link ?? null,
-          linkHostname: linkHostname ?? null,
+          content: content ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -160,9 +148,7 @@ export default function PostUpdateForm(props) {
             const modelFields = {
               author: value,
               title,
-              body,
-              link,
-              linkHostname,
+              content,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -188,9 +174,7 @@ export default function PostUpdateForm(props) {
             const modelFields = {
               author,
               title: value,
-              body,
-              link,
-              linkHostname,
+              content,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -206,88 +190,30 @@ export default function PostUpdateForm(props) {
         {...getOverrideProps(overrides, "title")}
       ></TextField>
       <TextField
-        label="Body"
+        label="Content"
         isRequired={false}
         isReadOnly={false}
-        value={body}
+        value={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               author,
               title,
-              body: value,
-              link,
-              linkHostname,
+              content: value,
             };
             const result = onChange(modelFields);
-            value = result?.body ?? value;
+            value = result?.content ?? value;
           }
-          if (errors.body?.hasError) {
-            runValidationTasks("body", value);
+          if (errors.content?.hasError) {
+            runValidationTasks("content", value);
           }
-          setBody(value);
+          setContent(value);
         }}
-        onBlur={() => runValidationTasks("body", body)}
-        errorMessage={errors.body?.errorMessage}
-        hasError={errors.body?.hasError}
-        {...getOverrideProps(overrides, "body")}
-      ></TextField>
-      <TextField
-        label="Link"
-        isRequired={false}
-        isReadOnly={false}
-        value={link}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              author,
-              title,
-              body,
-              link: value,
-              linkHostname,
-            };
-            const result = onChange(modelFields);
-            value = result?.link ?? value;
-          }
-          if (errors.link?.hasError) {
-            runValidationTasks("link", value);
-          }
-          setLink(value);
-        }}
-        onBlur={() => runValidationTasks("link", link)}
-        errorMessage={errors.link?.errorMessage}
-        hasError={errors.link?.hasError}
-        {...getOverrideProps(overrides, "link")}
-      ></TextField>
-      <TextField
-        label="Link hostname"
-        isRequired={false}
-        isReadOnly={false}
-        value={linkHostname}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              author,
-              title,
-              body,
-              link,
-              linkHostname: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.linkHostname ?? value;
-          }
-          if (errors.linkHostname?.hasError) {
-            runValidationTasks("linkHostname", value);
-          }
-          setLinkHostname(value);
-        }}
-        onBlur={() => runValidationTasks("linkHostname", linkHostname)}
-        errorMessage={errors.linkHostname?.errorMessage}
-        hasError={errors.linkHostname?.hasError}
-        {...getOverrideProps(overrides, "linkHostname")}
+        onBlur={() => runValidationTasks("content", content)}
+        errorMessage={errors.content?.errorMessage}
+        hasError={errors.content?.hasError}
+        {...getOverrideProps(overrides, "content")}
       ></TextField>
       <Flex
         justifyContent="space-between"

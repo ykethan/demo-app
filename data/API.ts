@@ -9,7 +9,6 @@ export type Comment = {
   content?: string | null,
   createdAt: string,
   id: string,
-  owner?: string | null,
   post?: Post | null,
   postCommentsId?: string | null,
   replies?: ModelCommentConnection | null,
@@ -19,13 +18,10 @@ export type Comment = {
 export type Post = {
   __typename: "Post",
   author?: string | null,
-  body?: string | null,
   comments?: ModelCommentConnection | null,
+  content?: string | null,
   createdAt: string,
   id: string,
-  link?: string | null,
-  linkHostname?: string | null,
-  owner?: string | null,
   title: string,
   updatedAt: string,
 };
@@ -112,10 +108,8 @@ export enum ModelSortDirection {
 export type ModelPostFilterInput = {
   and?: Array< ModelPostFilterInput | null > | null,
   author?: ModelStringInput | null,
-  body?: ModelStringInput | null,
+  content?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  link?: ModelStringInput | null,
-  linkHostname?: ModelStringInput | null,
   not?: ModelPostFilterInput | null,
   or?: Array< ModelPostFilterInput | null > | null,
   title?: ModelStringInput | null,
@@ -148,9 +142,7 @@ export type CreateCommentInput = {
 export type ModelPostConditionInput = {
   and?: Array< ModelPostConditionInput | null > | null,
   author?: ModelStringInput | null,
-  body?: ModelStringInput | null,
-  link?: ModelStringInput | null,
-  linkHostname?: ModelStringInput | null,
+  content?: ModelStringInput | null,
   not?: ModelPostConditionInput | null,
   or?: Array< ModelPostConditionInput | null > | null,
   title?: ModelStringInput | null,
@@ -158,10 +150,8 @@ export type ModelPostConditionInput = {
 
 export type CreatePostInput = {
   author?: string | null,
-  body?: string | null,
+  content?: string | null,
   id?: string | null,
-  link?: string | null,
-  linkHostname?: string | null,
   title: string,
 };
 
@@ -183,15 +173,14 @@ export type UpdateCommentInput = {
 
 export type UpdatePostInput = {
   author?: string | null,
-  body?: string | null,
+  content?: string | null,
   id: string,
-  link?: string | null,
-  linkHostname?: string | null,
   title?: string | null,
 };
 
 export type ModelSubscriptionCommentFilterInput = {
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+  author?: ModelSubscriptionStringInput | null,
   content?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
@@ -229,10 +218,9 @@ export type ModelSubscriptionIDInput = {
 
 export type ModelSubscriptionPostFilterInput = {
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
-  body?: ModelSubscriptionStringInput | null,
+  author?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
-  link?: ModelSubscriptionStringInput | null,
-  linkHostname?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
   title?: ModelSubscriptionStringInput | null,
 };
@@ -249,16 +237,12 @@ export type GetCommentQuery = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -279,16 +263,13 @@ export type GetPostQuery = {
   getPost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
@@ -312,7 +293,6 @@ export type ListCommentsQuery = {
       content?: string | null,
       createdAt: string,
       id: string,
-      owner?: string | null,
       postCommentsId?: string | null,
       updatedAt: string,
     } | null >,
@@ -334,12 +314,9 @@ export type ListPostsQuery = {
     items:  Array< {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null >,
@@ -360,16 +337,12 @@ export type CreateCommentMutation = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -391,16 +364,13 @@ export type CreatePostMutation = {
   createPost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
@@ -419,16 +389,12 @@ export type DeleteCommentMutation = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -450,16 +416,13 @@ export type DeletePostMutation = {
   deletePost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
@@ -478,16 +441,12 @@ export type UpdateCommentMutation = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -509,25 +468,20 @@ export type UpdatePostMutation = {
   updatePost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
 };
 
 export type OnCreateCommentSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateCommentSubscription = {
@@ -538,16 +492,12 @@ export type OnCreateCommentSubscription = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -561,34 +511,27 @@ export type OnCreateCommentSubscription = {
 };
 
 export type OnCreatePostSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionPostFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreatePostSubscription = {
   onCreatePost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
 };
 
 export type OnDeleteCommentSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteCommentSubscription = {
@@ -599,16 +542,12 @@ export type OnDeleteCommentSubscription = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -622,34 +561,27 @@ export type OnDeleteCommentSubscription = {
 };
 
 export type OnDeletePostSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionPostFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeletePostSubscription = {
   onDeletePost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,
 };
 
 export type OnUpdateCommentSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateCommentSubscription = {
@@ -660,16 +592,12 @@ export type OnUpdateCommentSubscription = {
     content?: string | null,
     createdAt: string,
     id: string,
-    owner?: string | null,
     post?:  {
       __typename: "Post",
       author?: string | null,
-      body?: string | null,
+      content?: string | null,
       createdAt: string,
       id: string,
-      link?: string | null,
-      linkHostname?: string | null,
-      owner?: string | null,
       title: string,
       updatedAt: string,
     } | null,
@@ -683,25 +611,20 @@ export type OnUpdateCommentSubscription = {
 };
 
 export type OnUpdatePostSubscriptionVariables = {
-  author?: string | null,
   filter?: ModelSubscriptionPostFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdatePostSubscription = {
   onUpdatePost?:  {
     __typename: "Post",
     author?: string | null,
-    body?: string | null,
     comments?:  {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    content?: string | null,
     createdAt: string,
     id: string,
-    link?: string | null,
-    linkHostname?: string | null,
-    owner?: string | null,
     title: string,
     updatedAt: string,
   } | null,

@@ -15,15 +15,11 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
     content
     createdAt
     id
-    owner
     post {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename
@@ -44,16 +40,13 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     author
-    body
     comments {
       nextToken
       __typename
     }
+    content
     createdAt
     id
-    link
-    linkHostname
-    owner
     title
     updatedAt
     __typename
@@ -80,7 +73,6 @@ export const listComments = /* GraphQL */ `query ListComments(
       content
       createdAt
       id
-      owner
       postCommentsId
       updatedAt
       __typename
@@ -109,12 +101,9 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   ) {
     items {
       author
-      body
+      content
       createdAt
       id
-      link
-      linkHostname
-      owner
       title
       updatedAt
       __typename

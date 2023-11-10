@@ -15,36 +15,35 @@ const schema = a.schema({
   [MODELS.Post]: a
     .model({
       id: a.id(),
-      author: a.string(), // readable owner username
+      author: a.string(),
       title: a.string().required(),
-      body: a.string(),
-      link: a.url(),
-      linkHostname: a.string(),
+      content: a.string(),
       comments: a.hasMany(MODELS.Comment),
     })
     .authorization([
       a.allow.public(),
-      a.allow.owner().inField("author"),
-      a.allow.owner(),
-      a.allow.specificGroup(GROUPS.admins).to(["read", "update", "delete"]),
-      a.allow.private("userPools").to(["list", "get"]),
-      a.allow.public("iam").to(["list", "get"]),
+      // a.allow.owner().inField("author"),
+      // a.allow.owner(),
+      // a.allow.specificGroup(GROUPS.admins).to(["read", "update", "delete"]),
+      // a.allow.private("userPools").to(["list", "get"]),
+      // a.allow.public("iam").to(["list", "get"]),
     ]),
   [MODELS.Comment]: a
     .model({
       id: a.id(),
-      author: a.string(), // readable owner username
+      author: a.string(),
       content: a.string(),
       post: a.belongsTo(MODELS.Post),
       replies: a.hasMany(MODELS.Comment),
     })
     .authorization([
-      a.allow.owner().inField("author"),
-      a.allow.owner(),
-      a.allow.specificGroup(GROUPS.admins).to(["read", "update", "delete"]),
-      a.allow.private("userPools").to(["list", "get"]),
-      a.allow.public("iam").to(["list", "get"]),
-      a.allow.public().to(["list", "get", "create"]),
+      // a.allow.owner().inField("author"),
+      // a.allow.owner(),
+      // a.allow.specificGroup(GROUPS.admins).to(["read", "update", "delete"]),
+      // a.allow.private("userPools").to(["list", "get"]),
+      // a.allow.public("iam").to(["list", "get"]),
+      // a.allow.public().to(["list", "get", "create"]),
+      a.allow.public(),
     ]),
 });
 
@@ -56,7 +55,7 @@ export const data = defineData({
   authorizationModes: {
     defaultAuthorizationMode: "API_KEY",
     apiKeyAuthorizationMode: {
-      expiresInDays: 7,
+      expiresInDays: 30,
       description: "API Key authorization",
     },
   },

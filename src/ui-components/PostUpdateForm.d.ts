@@ -19,25 +19,19 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type PostUpdateFormInputValues = {
     author?: string;
     title?: string;
-    body?: string;
-    link?: string;
-    linkHostname?: string;
+    content?: string;
 };
 export declare type PostUpdateFormValidationValues = {
     author?: ValidationFunction<string>;
     title?: ValidationFunction<string>;
-    body?: ValidationFunction<string>;
-    link?: ValidationFunction<string>;
-    linkHostname?: ValidationFunction<string>;
+    content?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostUpdateFormOverridesProps = {
     PostUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
-    body?: PrimitiveOverrideProps<TextFieldProps>;
-    link?: PrimitiveOverrideProps<TextFieldProps>;
-    linkHostname?: PrimitiveOverrideProps<TextFieldProps>;
+    content?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostUpdateFormProps = React.PropsWithChildren<{
     overrides?: PostUpdateFormOverridesProps | undefined | null;
