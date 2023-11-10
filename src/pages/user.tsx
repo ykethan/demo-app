@@ -2,11 +2,19 @@ import { useState, useEffect } from "react";
 import * as Auth from "@aws-amplify/auth";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface UserAttributes {
   name?: string;
   email?: string;
 }
+
+const hoverEffect = {
+  scale: 1.05, // Adjust the scale as needed
+  transition: {
+    duration: 0.2, // How long the hover effect takes
+  },
+};
 
 const UserAttributesComponent = ({
   userAttributes,
@@ -14,16 +22,26 @@ const UserAttributesComponent = ({
   userAttributes: UserAttributes;
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 text-gray-800 max-w-xl mx-auto">
+    <motion.div
+      className="bg-white rounded-lg shadow-lg p-8 text-gray-800 max-w-xl mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      whileHover={hoverEffect}
+    >
       <h4 className="font-bold text-lg">
         Welcome,{" "}
-        <span className="text-blue-500 animate-pulse text-xl">
+        <motion.span
+          className="text-blue-500 text-xl"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           {userAttributes.name}
-        </span>
-        !
+        </motion.span>
       </h4>
       <p className="text-md mt-2">Your email: {userAttributes.email}</p>
-    </div>
+    </motion.div>
   );
 };
 
@@ -86,10 +104,26 @@ const UserPage = () => {
 
       <main className="py-10">
         <div className="text-center mb-6">
-          <h2 className="text-4xl font-bold text-gray-800">User Dashboard</h2>
-          <p className="mt-3 text-lg text-gray-600">
+          <motion.h2
+            className="text-4xl font-bold text-gray-800"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+            }}
+          >
+            User Dashboard
+          </motion.h2>
+          <motion.p
+            className="mt-3 text-lg text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 1 }}
+          >
             Heres a quick look at your profile:
-          </p>
+          </motion.p>
         </div>
         {isLoading ? (
           <div className="text-center">Loading...</div>
