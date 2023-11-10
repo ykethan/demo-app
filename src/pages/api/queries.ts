@@ -27,7 +27,7 @@ export default async function handler(
       query: queries.listPosts,
     });
     const posts = postData.data.listPosts?.items || [];
-    console.log("post list", posts);
+    // console.log("post list", posts);
     res.status(200).json({ posts });
   } catch (err) {
     console.log("error fetching posts...", err);

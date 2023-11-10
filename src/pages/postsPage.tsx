@@ -104,6 +104,10 @@ export default function PostsPage() {
     }
   };
 
+  const navigateToPostDetails = (postId: string) => {
+    router.push(`/post/${postId}`);
+  };
+
   const formOverrides: PostCreateFormOverridesProps = {
     author: {
       value: user,
@@ -135,7 +139,8 @@ export default function PostsPage() {
             {posts.map((post) => (
               <article
                 key={post.id}
-                className="bg-white shadow-md rounded p-4 mb-4"
+                className="bg-white shadow-md rounded p-4 mb-4 cursor-pointer"
+                onClick={() => navigateToPostDetails(post.id)} // Add this line
               >
                 <h2 className="text-xl font-semibold text-gray-800">
                   {post.title}

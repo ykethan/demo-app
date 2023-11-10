@@ -35,6 +35,7 @@ const UserAttributesComponent = ({
           className="text-blue-500 text-xl"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
+          whileHover={{ scale: 1.1, originX: 0 }}
           transition={{ duration: 0.8 }}
         >
           {userAttributes.name}

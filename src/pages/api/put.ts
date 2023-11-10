@@ -21,7 +21,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("req", req.body);
+  // console.log("req", req.body);
   try {
     const postData = await client.graphql<GraphQLQuery<CreatePostMutation>>({
       query: queries.createPost,
@@ -32,7 +32,7 @@ export default async function handler(
       },
     });
     const post = postData.data.createPost || "";
-    console.log("post list", post);
+    // console.log("post list", post);
     res.status(200).json({ post });
   } catch (err) {
     console.log("error fetching posts...", err);
