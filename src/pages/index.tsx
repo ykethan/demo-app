@@ -2,6 +2,8 @@ import Link from "next/link";
 import * as Auth from "@aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 import { useEffect, useState } from "react";
+import { PostCreateForm } from "@/ui-components";
+import "@aws-amplify/ui-react/styles.css";
 
 interface Post {
   author?: string | null;
@@ -11,6 +13,12 @@ interface Post {
   title: string;
   updatedAt: string;
   __typename: string;
+}
+
+interface PostCreateFormInputValues {
+  author?: string;
+  title?: string;
+  content?: string;
 }
 
 export default function HomePage() {
@@ -56,6 +64,29 @@ export default function HomePage() {
     }
   }
 
+  const handleSubmit = (formData: PostCreateFormInputValues) => {
+    createPost(formData);
+    return formData;
+  };
+  const createPost = async (formData: PostCreateFormInputValues) => {
+    try {
+      const response = await fetch("/api/put", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, author: user }),
+      });
+
+      if (response.ok) {
+        const { post } = await response.json();
+        setPosts((currentPosts) => [...currentPosts, post]);
+      } else {
+        console.error("Failed to create the post");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
       <header className="flex justify-between items-center py-4">
@@ -97,12 +128,7 @@ export default function HomePage() {
         </div>
         {user && (
           <div className="mt-4">
-            <Link
-              href="/create-post"
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Create Post
-            </Link>
+            <PostCreateForm onSubmit={handleSubmit} />
           </div>
         )}
       </main>
