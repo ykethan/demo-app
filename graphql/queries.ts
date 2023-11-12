@@ -6,7 +6,6 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -46,6 +45,19 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
+export const getReply = /* GraphQL */ `
+  query GetReply($id: ID!) {
+    getReply(id: $id) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const listComments = /* GraphQL */ `
   query ListComments(
     $filter: ModelCommentFilterInput
@@ -63,7 +75,6 @@ export const listComments = /* GraphQL */ `
     ) {
       items {
         author
-        commentRepliesId
         content
         createdAt
         id
@@ -97,6 +108,35 @@ export const listPosts = /* GraphQL */ `
         createdAt
         id
         title
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const listReplies = /* GraphQL */ `
+  query ListReplies(
+    $filter: ModelReplyFilterInput
+    $id: ID
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listReplies(
+      filter: $filter
+      id: $id
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        author
+        commentRepliesId
+        content
+        createdAt
+        id
         updatedAt
         __typename
       }

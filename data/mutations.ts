@@ -14,7 +14,6 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
 ) {
   createComment(condition: $condition, input: $input) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -62,13 +61,30 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
   APITypes.CreatePostMutationVariables,
   APITypes.CreatePostMutation
 >;
+export const createReply = /* GraphQL */ `mutation CreateReply(
+  $condition: ModelReplyConditionInput
+  $input: CreateReplyInput!
+) {
+  createReply(condition: $condition, input: $input) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateReplyMutationVariables,
+  APITypes.CreateReplyMutation
+>;
 export const deleteComment = /* GraphQL */ `mutation DeleteComment(
   $condition: ModelCommentConditionInput
   $input: DeleteCommentInput!
 ) {
   deleteComment(condition: $condition, input: $input) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -116,13 +132,30 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
   APITypes.DeletePostMutationVariables,
   APITypes.DeletePostMutation
 >;
+export const deleteReply = /* GraphQL */ `mutation DeleteReply(
+  $condition: ModelReplyConditionInput
+  $input: DeleteReplyInput!
+) {
+  deleteReply(condition: $condition, input: $input) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteReplyMutationVariables,
+  APITypes.DeleteReplyMutation
+>;
 export const updateComment = /* GraphQL */ `mutation UpdateComment(
   $condition: ModelCommentConditionInput
   $input: UpdateCommentInput!
 ) {
   updateComment(condition: $condition, input: $input) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -169,4 +202,22 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
 ` as GeneratedMutation<
   APITypes.UpdatePostMutationVariables,
   APITypes.UpdatePostMutation
+>;
+export const updateReply = /* GraphQL */ `mutation UpdateReply(
+  $condition: ModelReplyConditionInput
+  $input: UpdateReplyInput!
+) {
+  updateReply(condition: $condition, input: $input) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateReplyMutationVariables,
+  APITypes.UpdateReplyMutation
 >;

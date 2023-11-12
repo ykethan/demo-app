@@ -11,7 +11,6 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
   getComment(id: $id) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -53,6 +52,18 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   }
 }
 ` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
+export const getReply = /* GraphQL */ `query GetReply($id: ID!) {
+  getReply(id: $id) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetReplyQueryVariables, APITypes.GetReplyQuery>;
 export const listComments = /* GraphQL */ `query ListComments(
   $filter: ModelCommentFilterInput
   $id: ID
@@ -69,7 +80,6 @@ export const listComments = /* GraphQL */ `query ListComments(
   ) {
     items {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -113,3 +123,34 @@ export const listPosts = /* GraphQL */ `query ListPosts(
   }
 }
 ` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
+export const listReplies = /* GraphQL */ `query ListReplies(
+  $filter: ModelReplyFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listReplies(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRepliesQueryVariables,
+  APITypes.ListRepliesQuery
+>;

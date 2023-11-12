@@ -5,6 +5,7 @@ const MODELS = {
   Comment: "Comment",
   Upvote: "Upvote",
   UserProfile: "UserProfile",
+  Reply: "Reply",
 } as const;
 
 const GROUPS = {
@@ -34,7 +35,7 @@ const schema = a.schema({
       author: a.string(),
       content: a.string(),
       post: a.belongsTo(MODELS.Post),
-      replies: a.hasMany(MODELS.Comment),
+      replies: a.hasMany(MODELS.Reply),
     })
     .authorization([
       // a.allow.owner().inField("author"),
@@ -45,6 +46,13 @@ const schema = a.schema({
       // a.allow.public().to(["list", "get", "create"]),
       a.allow.public(),
     ]),
+  [MODELS.Reply]: a
+    .model({
+      id: a.id(),
+      author: a.string(),
+      content: a.string(),
+    })
+    .authorization([a.allow.public()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

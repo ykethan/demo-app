@@ -138,7 +138,7 @@ export default function PostsPage() {
   };
 
   const logoutButtonVariants = {
-    hover: { scale: 1.05, backgroundColor: "#ff0000" }, // Change color on hover
+    hover: { scale: 1.05, backgroundColor: "#ff0000" },
     tap: { scale: 0.95 },
   };
 

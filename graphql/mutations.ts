@@ -9,7 +9,6 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(condition: $condition, input: $input) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -52,6 +51,22 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
+export const createReply = /* GraphQL */ `
+  mutation CreateReply(
+    $condition: ModelReplyConditionInput
+    $input: CreateReplyInput!
+  ) {
+    createReply(condition: $condition, input: $input) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const deleteComment = /* GraphQL */ `
   mutation DeleteComment(
     $condition: ModelCommentConditionInput
@@ -59,7 +74,6 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(condition: $condition, input: $input) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -102,6 +116,22 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
+export const deleteReply = /* GraphQL */ `
+  mutation DeleteReply(
+    $condition: ModelReplyConditionInput
+    $input: DeleteReplyInput!
+  ) {
+    deleteReply(condition: $condition, input: $input) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const updateComment = /* GraphQL */ `
   mutation UpdateComment(
     $condition: ModelCommentConditionInput
@@ -109,7 +139,6 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(condition: $condition, input: $input) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -147,6 +176,22 @@ export const updatePost = /* GraphQL */ `
       createdAt
       id
       title
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateReply = /* GraphQL */ `
+  mutation UpdateReply(
+    $condition: ModelReplyConditionInput
+    $input: UpdateReplyInput!
+  ) {
+    updateReply(condition: $condition, input: $input) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
       updatedAt
       __typename
     }

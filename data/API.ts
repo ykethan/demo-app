@@ -5,13 +5,12 @@
 export type Comment = {
   __typename: "Comment",
   author?: string | null,
-  commentRepliesId?: string | null,
   content?: string | null,
   createdAt: string,
   id: string,
   post?: Post | null,
   postCommentsId?: string | null,
-  replies?: ModelCommentConnection | null,
+  replies?: ModelReplyConnection | null,
   updatedAt: string,
 };
 
@@ -32,10 +31,25 @@ export type ModelCommentConnection = {
   nextToken?: string | null,
 };
 
+export type ModelReplyConnection = {
+  __typename: "ModelReplyConnection",
+  items:  Array<Reply | null >,
+  nextToken?: string | null,
+};
+
+export type Reply = {
+  __typename: "Reply",
+  author?: string | null,
+  commentRepliesId?: string | null,
+  content?: string | null,
+  createdAt: string,
+  id: string,
+  updatedAt: string,
+};
+
 export type ModelCommentFilterInput = {
   and?: Array< ModelCommentFilterInput | null > | null,
   author?: ModelStringInput | null,
-  commentRepliesId?: ModelIDInput | null,
   content?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelCommentFilterInput | null,
@@ -121,10 +135,19 @@ export type ModelPostConnection = {
   nextToken?: string | null,
 };
 
+export type ModelReplyFilterInput = {
+  and?: Array< ModelReplyFilterInput | null > | null,
+  author?: ModelStringInput | null,
+  commentRepliesId?: ModelIDInput | null,
+  content?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelReplyFilterInput | null,
+  or?: Array< ModelReplyFilterInput | null > | null,
+};
+
 export type ModelCommentConditionInput = {
   and?: Array< ModelCommentConditionInput | null > | null,
   author?: ModelStringInput | null,
-  commentRepliesId?: ModelIDInput | null,
   content?: ModelStringInput | null,
   not?: ModelCommentConditionInput | null,
   or?: Array< ModelCommentConditionInput | null > | null,
@@ -133,7 +156,6 @@ export type ModelCommentConditionInput = {
 
 export type CreateCommentInput = {
   author?: string | null,
-  commentRepliesId?: string | null,
   content?: string | null,
   id?: string | null,
   postCommentsId?: string | null,
@@ -155,6 +177,22 @@ export type CreatePostInput = {
   title: string,
 };
 
+export type ModelReplyConditionInput = {
+  and?: Array< ModelReplyConditionInput | null > | null,
+  author?: ModelStringInput | null,
+  commentRepliesId?: ModelIDInput | null,
+  content?: ModelStringInput | null,
+  not?: ModelReplyConditionInput | null,
+  or?: Array< ModelReplyConditionInput | null > | null,
+};
+
+export type CreateReplyInput = {
+  author?: string | null,
+  commentRepliesId?: string | null,
+  content?: string | null,
+  id?: string | null,
+};
+
 export type DeleteCommentInput = {
   id: string,
 };
@@ -163,9 +201,12 @@ export type DeletePostInput = {
   id: string,
 };
 
+export type DeleteReplyInput = {
+  id: string,
+};
+
 export type UpdateCommentInput = {
   author?: string | null,
-  commentRepliesId?: string | null,
   content?: string | null,
   id: string,
   postCommentsId?: string | null,
@@ -176,6 +217,13 @@ export type UpdatePostInput = {
   content?: string | null,
   id: string,
   title?: string | null,
+};
+
+export type UpdateReplyInput = {
+  author?: string | null,
+  commentRepliesId?: string | null,
+  content?: string | null,
+  id: string,
 };
 
 export type ModelSubscriptionCommentFilterInput = {
@@ -225,6 +273,14 @@ export type ModelSubscriptionPostFilterInput = {
   title?: ModelSubscriptionStringInput | null,
 };
 
+export type ModelSubscriptionReplyFilterInput = {
+  and?: Array< ModelSubscriptionReplyFilterInput | null > | null,
+  author?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  or?: Array< ModelSubscriptionReplyFilterInput | null > | null,
+};
+
 export type GetCommentQueryVariables = {
   id: string,
 };
@@ -233,7 +289,6 @@ export type GetCommentQuery = {
   getComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -248,7 +303,7 @@ export type GetCommentQuery = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -275,6 +330,22 @@ export type GetPostQuery = {
   } | null,
 };
 
+export type GetReplyQueryVariables = {
+  id: string,
+};
+
+export type GetReplyQuery = {
+  getReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type ListCommentsQueryVariables = {
   filter?: ModelCommentFilterInput | null,
   id?: string | null,
@@ -289,7 +360,6 @@ export type ListCommentsQuery = {
     items:  Array< {
       __typename: "Comment",
       author?: string | null,
-      commentRepliesId?: string | null,
       content?: string | null,
       createdAt: string,
       id: string,
@@ -324,6 +394,30 @@ export type ListPostsQuery = {
   } | null,
 };
 
+export type ListRepliesQueryVariables = {
+  filter?: ModelReplyFilterInput | null,
+  id?: string | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListRepliesQuery = {
+  listReplies?:  {
+    __typename: "ModelReplyConnection",
+    items:  Array< {
+      __typename: "Reply",
+      author?: string | null,
+      commentRepliesId?: string | null,
+      content?: string | null,
+      createdAt: string,
+      id: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type CreateCommentMutationVariables = {
   condition?: ModelCommentConditionInput | null,
   input: CreateCommentInput,
@@ -333,7 +427,6 @@ export type CreateCommentMutation = {
   createComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -348,7 +441,7 @@ export type CreateCommentMutation = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -376,6 +469,23 @@ export type CreatePostMutation = {
   } | null,
 };
 
+export type CreateReplyMutationVariables = {
+  condition?: ModelReplyConditionInput | null,
+  input: CreateReplyInput,
+};
+
+export type CreateReplyMutation = {
+  createReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type DeleteCommentMutationVariables = {
   condition?: ModelCommentConditionInput | null,
   input: DeleteCommentInput,
@@ -385,7 +495,6 @@ export type DeleteCommentMutation = {
   deleteComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -400,7 +509,7 @@ export type DeleteCommentMutation = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -428,6 +537,23 @@ export type DeletePostMutation = {
   } | null,
 };
 
+export type DeleteReplyMutationVariables = {
+  condition?: ModelReplyConditionInput | null,
+  input: DeleteReplyInput,
+};
+
+export type DeleteReplyMutation = {
+  deleteReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type UpdateCommentMutationVariables = {
   condition?: ModelCommentConditionInput | null,
   input: UpdateCommentInput,
@@ -437,7 +563,6 @@ export type UpdateCommentMutation = {
   updateComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -452,7 +577,7 @@ export type UpdateCommentMutation = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -480,6 +605,23 @@ export type UpdatePostMutation = {
   } | null,
 };
 
+export type UpdateReplyMutationVariables = {
+  condition?: ModelReplyConditionInput | null,
+  input: UpdateReplyInput,
+};
+
+export type UpdateReplyMutation = {
+  updateReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
 };
@@ -488,7 +630,6 @@ export type OnCreateCommentSubscription = {
   onCreateComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -503,7 +644,7 @@ export type OnCreateCommentSubscription = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -530,6 +671,22 @@ export type OnCreatePostSubscription = {
   } | null,
 };
 
+export type OnCreateReplySubscriptionVariables = {
+  filter?: ModelSubscriptionReplyFilterInput | null,
+};
+
+export type OnCreateReplySubscription = {
+  onCreateReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnDeleteCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
 };
@@ -538,7 +695,6 @@ export type OnDeleteCommentSubscription = {
   onDeleteComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -553,7 +709,7 @@ export type OnDeleteCommentSubscription = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -580,6 +736,22 @@ export type OnDeletePostSubscription = {
   } | null,
 };
 
+export type OnDeleteReplySubscriptionVariables = {
+  filter?: ModelSubscriptionReplyFilterInput | null,
+};
+
+export type OnDeleteReplySubscription = {
+  onDeleteReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnUpdateCommentSubscriptionVariables = {
   filter?: ModelSubscriptionCommentFilterInput | null,
 };
@@ -588,7 +760,6 @@ export type OnUpdateCommentSubscription = {
   onUpdateComment?:  {
     __typename: "Comment",
     author?: string | null,
-    commentRepliesId?: string | null,
     content?: string | null,
     createdAt: string,
     id: string,
@@ -603,7 +774,7 @@ export type OnUpdateCommentSubscription = {
     } | null,
     postCommentsId?: string | null,
     replies?:  {
-      __typename: "ModelCommentConnection",
+      __typename: "ModelReplyConnection",
       nextToken?: string | null,
     } | null,
     updatedAt: string,
@@ -626,6 +797,22 @@ export type OnUpdatePostSubscription = {
     createdAt: string,
     id: string,
     title: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateReplySubscriptionVariables = {
+  filter?: ModelSubscriptionReplyFilterInput | null,
+};
+
+export type OnUpdateReplySubscription = {
+  onUpdateReply?:  {
+    __typename: "Reply",
+    author?: string | null,
+    commentRepliesId?: string | null,
+    content?: string | null,
+    createdAt: string,
+    id: string,
     updatedAt: string,
   } | null,
 };

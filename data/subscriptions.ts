@@ -11,7 +11,6 @@ type GeneratedSubscription<InputType, OutputType> = string & {
 export const onCreateComment = /* GraphQL */ `subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
   onCreateComment(filter: $filter) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -56,10 +55,24 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: Mo
   APITypes.OnCreatePostSubscriptionVariables,
   APITypes.OnCreatePostSubscription
 >;
+export const onCreateReply = /* GraphQL */ `subscription OnCreateReply($filter: ModelSubscriptionReplyFilterInput) {
+  onCreateReply(filter: $filter) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateReplySubscriptionVariables,
+  APITypes.OnCreateReplySubscription
+>;
 export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filter: ModelSubscriptionCommentFilterInput) {
   onDeleteComment(filter: $filter) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -104,10 +117,24 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: Mo
   APITypes.OnDeletePostSubscriptionVariables,
   APITypes.OnDeletePostSubscription
 >;
+export const onDeleteReply = /* GraphQL */ `subscription OnDeleteReply($filter: ModelSubscriptionReplyFilterInput) {
+  onDeleteReply(filter: $filter) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteReplySubscriptionVariables,
+  APITypes.OnDeleteReplySubscription
+>;
 export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment($filter: ModelSubscriptionCommentFilterInput) {
   onUpdateComment(filter: $filter) {
     author
-    commentRepliesId
     content
     createdAt
     id
@@ -151,4 +178,19 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: Mo
 ` as GeneratedSubscription<
   APITypes.OnUpdatePostSubscriptionVariables,
   APITypes.OnUpdatePostSubscription
+>;
+export const onUpdateReply = /* GraphQL */ `subscription OnUpdateReply($filter: ModelSubscriptionReplyFilterInput) {
+  onUpdateReply(filter: $filter) {
+    author
+    commentRepliesId
+    content
+    createdAt
+    id
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateReplySubscriptionVariables,
+  APITypes.OnUpdateReplySubscription
 >;

@@ -6,7 +6,6 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
     onCreateComment(filter: $filter) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -46,11 +45,23 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
+export const onCreateReply = /* GraphQL */ `
+  subscription OnCreateReply($filter: ModelSubscriptionReplyFilterInput) {
+    onCreateReply(filter: $filter) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment($filter: ModelSubscriptionCommentFilterInput) {
     onDeleteComment(filter: $filter) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -90,11 +101,23 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
+export const onDeleteReply = /* GraphQL */ `
+  subscription OnDeleteReply($filter: ModelSubscriptionReplyFilterInput) {
+    onDeleteReply(filter: $filter) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment($filter: ModelSubscriptionCommentFilterInput) {
     onUpdateComment(filter: $filter) {
       author
-      commentRepliesId
       content
       createdAt
       id
@@ -129,6 +152,19 @@ export const onUpdatePost = /* GraphQL */ `
       createdAt
       id
       title
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateReply = /* GraphQL */ `
+  subscription OnUpdateReply($filter: ModelSubscriptionReplyFilterInput) {
+    onUpdateReply(filter: $filter) {
+      author
+      commentRepliesId
+      content
+      createdAt
+      id
       updatedAt
       __typename
     }

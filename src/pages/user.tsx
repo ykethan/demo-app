@@ -10,9 +10,9 @@ interface UserAttributes {
 }
 
 const hoverEffect = {
-  scale: 1.05, // Adjust the scale as needed
+  scale: 1.05,
   transition: {
-    duration: 0.2, // How long the hover effect takes
+    duration: 0.2,
   },
 };
 
@@ -21,6 +21,16 @@ const UserAttributesComponent = ({
 }: {
   userAttributes: UserAttributes;
 }) => {
+  const usernameVariants = {
+    hover: {
+      y: -5,
+      color: "#F472B6",
+      transition: {
+        y: { type: "spring", stiffness: 300 },
+      },
+    },
+  };
+
   return (
     <motion.div
       className="bg-white rounded-lg shadow-lg p-8 text-gray-800 max-w-xl mx-auto"
@@ -35,7 +45,8 @@ const UserAttributesComponent = ({
           className="text-blue-500 text-xl"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          whileHover={{ scale: 1.1, originX: 0 }}
+          whileHover="hover"
+          variants={usernameVariants} // Apply the variants here
           transition={{ duration: 0.8 }}
         >
           {userAttributes.name}
