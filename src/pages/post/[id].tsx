@@ -12,6 +12,7 @@ import { PostCreateFormOverridesProps } from "@/ui-components/PostCreateForm";
 const PostDetailsPage = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [activeReplyForm, setActiveReplyForm] = useState<string | null>(null);
   const router = useRouter();
   const { id } = router.query;
   const client = generateClient();
@@ -60,6 +61,11 @@ query GetComment($id: ID!) {
   }
 }
 `;
+
+  interface ReplyCreateFormInputValues {
+    author?: string;
+    content?: string;
+  }
 
   interface CommentCreateFormInputValues {
     author?: string;
@@ -196,6 +202,8 @@ query GetComment($id: ID!) {
       }
 
       const { comment: newComment } = await response.json();
+      const replies = newComment.replies || [];
+      newComment.replies = replies;
       setComments((currentComments) => [...currentComments, newComment]);
       setShowCommentForm(false);
     } catch (error) {
@@ -241,18 +249,70 @@ query GetComment($id: ID!) {
       },
     };
 
+    const toggleCollapse = () => {
+      setIsOpen(!isOpen);
+    };
+
     return (
       <div className="collapsible">
         <motion.button
           whileHover="hover"
           variants={headerVariants}
           className="collapsible-header cursor-pointer bg-gray-200 p-2 mt-2 rounded text-gray-800 font-medium"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleCollapse}
         >
           {title}
         </motion.button>
         {isOpen && <div className="collapsible-content">{children}</div>}
       </div>
+    );
+  };
+
+  const handleReplySubmit = async (
+    formData: ReplyCreateFormInputValues,
+    commentId: string
+  ) => {
+    const replyData = {
+      author: formData.author || user,
+      content: formData.content,
+      commentRepliesId: commentId,
+    };
+
+    try {
+      const response = await fetch("/api/replyPut", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(replyData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const { reply: newReply } = await response.json();
+      setComments((currentComments) =>
+        currentComments.map((comment) =>
+          comment.id === commentId
+            ? {
+                ...comment,
+                replies: Array.isArray(comment.replies)
+                  ? [...comment.replies, newReply]
+                  : [newReply],
+              }
+            : comment
+        )
+      );
+      setActiveReplyForm(null);
+    } catch (error) {
+      console.error("Error submitting reply:", error);
+    }
+  };
+
+  const toggleReplyForm = (commentId: string) => {
+    setActiveReplyForm((currentId) =>
+      currentId === commentId ? null : commentId
     );
   };
 
@@ -300,18 +360,41 @@ query GetComment($id: ID!) {
               <span className="text-sm text-gray-500">
                 By: {comment.author}
               </span>
-              <Collapsible title={`${comment.replies.length} Replies`}>
-                {comment.replies.map((reply) => (
-                  <motion.div
-                    key={reply.id}
-                    className="reply bg-gray-100 p-3 my-1 ml-4 shadow rounded"
-                    whileHover={{ scale: 1.02 }} // subtle scale effect on hover
-                    transition={{ type: "spring", stiffness: 300 }} // spring animation for smooth effect
-                  >
-                    <strong className="text-gray-900">{reply.author}:</strong>
-                    <span className="text-gray-800"> {reply.content}</span>
-                  </motion.div>
-                ))}
+
+              <button
+                onClick={() => toggleReplyForm(comment.id)}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                {activeReplyForm === comment.id ? "Cancel Reply" : "Add Reply"}
+              </button>
+              {activeReplyForm === comment.id && (
+                <ReplyCreateForm
+                  onSubmit={(formData) => {
+                    handleReplySubmit(formData, comment.id).catch((error) => {
+                      console.error("Error submitting reply:", error);
+                    });
+                    return formData;
+                  }}
+                  overrides={commentFormOverrides}
+                />
+              )}
+              <Collapsible
+                title={`${
+                  comment.replies.length ? comment.replies.length : 0
+                } Replies`}
+              >
+                {Array.isArray(comment.replies) &&
+                  comment.replies.map((reply) => (
+                    <motion.div
+                      key={reply.id}
+                      className="reply bg-gray-100 p-3 my-1 ml-4 shadow rounded"
+                      whileHover={{ scale: 1.02 }} // subtle scale effect on hover
+                      transition={{ type: "spring", stiffness: 300 }} // spring animation for smooth effect
+                    >
+                      <strong className="text-gray-900">{reply.author}:</strong>
+                      <span className="text-gray-800"> {reply.content}</span>
+                    </motion.div>
+                  ))}
               </Collapsible>
             </motion.div>
           ))}
