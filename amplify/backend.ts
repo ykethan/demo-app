@@ -20,56 +20,56 @@ const backend = defineBackend({
 //   }
 // );
 
-const identityPoolId =
-  backend.resources.auth.resources.cfnResources.identityPool.ref;
+// const identityPoolId =
+//   backend.resources.auth.resources.cfnResources.identityPool.ref;
 
-backend.resources.auth.resources.cfnResources.identityPool.allowUnauthenticatedIdentities =
-  true;
+// backend.resources.auth.resources.cfnResources.identityPool.allowUnauthenticatedIdentities =
+//   true;
 
-const amplifyRum = backend.getStack("amplify-rum-stack");
-const applicationName = `amplify-example.com`;
+// const amplifyRum = backend.getStack("amplify-rum-stack");
+// const applicationName = `amplify-example.com`;
 
-backend.resources.auth.resources.unauthenticatedUserIamRole.attachInlinePolicy(
-  new iam.Policy(amplifyRum, "rum-policy-cdk", {
-    statements: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["rum:PutRumEvents"],
-        resources: [
-          `arn:aws:rum:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:appmonitor/${applicationName}`,
-        ],
-      }),
-    ],
-  })
-);
+// backend.resources.auth.resources.unauthenticatedUserIamRole.attachInlinePolicy(
+//   new iam.Policy(amplifyRum, "rum-policy-cdk", {
+//     statements: [
+//       new iam.PolicyStatement({
+//         effect: iam.Effect.ALLOW,
+//         actions: ["rum:PutRumEvents"],
+//         resources: [
+//           `arn:aws:rum:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:appmonitor/${applicationName}`,
+//         ],
+//       }),
+//     ],
+//   })
+// );
 
-const cwRumAppMonitor = new rum.CfnAppMonitor(
-  amplifyRum,
-  "cwrum-amplify-app-monitor",
-  {
-    domain: "localhost",
-    name: applicationName,
-    appMonitorConfiguration: {
-      allowCookies: true,
-      enableXRay: false,
-      sessionSampleRate: 1,
-      telemetries: ["errors", "performance", "http"],
-      identityPoolId: identityPoolId,
-      guestRoleArn:
-        backend.resources.auth.resources.unauthenticatedUserIamRole.roleArn,
-    },
-    cwLogEnabled: true,
-  }
-);
+// const cwRumAppMonitor = new rum.CfnAppMonitor(
+//   amplifyRum,
+//   "cwrum-amplify-app-monitor",
+//   {
+//     domain: "localhost",
+//     name: applicationName,
+//     appMonitorConfiguration: {
+//       allowCookies: true,
+//       enableXRay: false,
+//       sessionSampleRate: 1,
+//       telemetries: ["errors", "performance", "http"],
+//       identityPoolId: identityPoolId,
+//       guestRoleArn:
+//         backend.resources.auth.resources.unauthenticatedUserIamRole.roleArn,
+//     },
+//     cwLogEnabled: true,
+//   }
+// );
 
-const out = new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-id", {
-  value: cwRumAppMonitor.ref,
-});
+// const out = new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-id", {
+//   value: cwRumAppMonitor.ref,
+// });
 
-new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-name", {
-  value: cwRumAppMonitor.name,
-});
+// new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-name", {
+//   value: cwRumAppMonitor.name,
+// });
 
-new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-domain", {
-  value: cwRumAppMonitor.domain,
-});
+// new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-domain", {
+//   value: cwRumAppMonitor.domain,
+// });
