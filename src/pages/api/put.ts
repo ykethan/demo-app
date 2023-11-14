@@ -5,25 +5,14 @@ import * as queries from "../../../data/mutations";
 
 const client = generateClient();
 
-type Data = {
-  posts: {
-    author?: string | null;
-    content?: string | null;
-    createdAt: string;
-    id: string;
-    title: string;
-    updatedAt: string;
-    __typename: string;
-  }[];
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   // console.log("req", req.body);
+
   try {
-    const postData = await client.graphql<GraphQLQuery<CreatePostMutation>>({
+    const postData = await client.graphql({
       query: queries.createPost,
       variables: {
         input: {
@@ -31,7 +20,7 @@ export default async function handler(
         },
       },
     });
-    const post = postData.data.createPost || "";
+    const post = postData.data.createPost;
     // console.log("post list", post);
     res.status(200).json({ post });
   } catch (err) {
