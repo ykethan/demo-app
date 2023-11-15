@@ -21,18 +21,18 @@ const backend = defineBackend({
 //   }
 // );
 
-const bucketStack = backend.createStack("BucketStack");
-const bucket = new s3.Bucket(bucketStack, "Bucket", {
-  blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-});
+// const bucketStack = backend.createStack("BucketStack");
+// const bucket = new s3.Bucket(bucketStack, "Bucket", {
+//   blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+// });
 
-// allow any authenticated user to read and write to the bucket
-const authRole = backend.resources.auth.resources.authenticatedUserIamRole;
-bucket.grantReadWrite(authRole);
+// // allow any authenticated user to read and write to the bucket
+// const authRole = backend.resources.auth.resources.authenticatedUserIamRole;
+// bucket.grantReadWrite(authRole);
 
-// allow any guest (unauthenticated) user to read from the bucket
-const unauthRole = backend.resources.auth.resources.unauthenticatedUserIamRole;
-bucket.grantRead(unauthRole);
+// // allow any guest (unauthenticated) user to read from the bucket
+// const unauthRole = backend.resources.auth.resources.unauthenticatedUserIamRole;
+// bucket.grantRead(unauthRole);
 
 // const identityPoolId =
 //   backend.resources.auth.resources.cfnResources.identityPool.ref;
