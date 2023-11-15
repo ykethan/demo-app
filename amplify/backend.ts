@@ -21,7 +21,7 @@ const backend = defineBackend({
 //   }
 // );
 
-const bucketStack = backend.getStack("BucketStack");
+const bucketStack = backend.createStack("BucketStack");
 const bucket = new s3.Bucket(bucketStack, "Bucket", {
   blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 });
