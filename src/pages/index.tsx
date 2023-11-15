@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -41,7 +42,7 @@ const schema = a.schema({
   Todo: a.model({
     title: a.string(),
     description: a.string(),
-    priority: a.enum(['low', 'medium', 'high']).default('low')
+    priority: a.enum(['low', 'medium', 'high'])
   })
 });
 
@@ -95,6 +96,21 @@ export default function HomePage() {
 }
  `;
 
+  const customexp = `
+ const bucketStack = backend.getStack("BucketStack");
+const bucket = new s3.Bucket(bucketStack, "Bucket", {
+  blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+});
+
+// allow any authenticated user to read and write to the bucket
+const authRole = backend.resources.auth.resources.authenticatedUserIamRole;
+bucket.grantReadWrite(authRole);
+
+// allow any guest (unauthenticated) user to read from the bucket
+const unauthRole = backend.resources.auth.resources.unauthenticatedUserIamRole;
+bucket.grantRead(unauthRole);
+ `;
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <header className="flex justify-between items-center p-4 bg-purple-700 shadow-lg">
@@ -126,10 +142,38 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Introducing AWS Amplify Gen 2
           </h2>
-          <p className="text-gray-700 text-lg leading-relaxed">
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
             AWS Amplify Gen 2 provides a TypeScript-based, code-first developer
-            experience, bringing a new approach to defining backends by
-            leveraging an infrastructure-from-code paradigm.
+            experience, introducing a new way to define backends through an
+            infrastructure-from-code paradigm.
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            It leverages the{" "}
+            <strong>AWS Cloud Development Kit (AWS CDK)</strong> to accelerate
+            cloud development, allowing you to model your applications in
+            TypeScript.
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed">
+            The AWS CDK transforms cloud infrastructure management, making
+            development rapid and iterative with a method known as hotswapping.
+            As you make changes, the CDK automatically updates your deployment.
+            It assesses whether to apply changes in-place or to initiate a full
+            CloudFormation deployment, significantly enhancing development speed
+            and efficiency.
+          </p>
+          <br />
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            For documentation, please refer to the{" "}
+            <a
+              href="https://next-docs.amplify.aws/gen2/how-amplify-works/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              aria-label="AWS Amplify Gen 2 documentation"
+            >
+              AWS Amplify Gen 2 documentation
+            </a>
+            .
           </p>
         </motion.section>
         {imageUrls[0] && (
@@ -217,7 +261,7 @@ export default function HomePage() {
             Creating a Amplify Gen 2 App:
           </h2>
           <CommandLine command={createCommand} />
-
+          <br />
           <h2 className="text-xl font-bold mb-2">Project Structure:</h2>
           <CodeBlock language="text" value={sampleCode} />
         </div>
@@ -242,10 +286,45 @@ export default function HomePage() {
           </h3>
           <p className="text-gray-700 text-lg leading-relaxed">
             Extend Amplify-generated resources easily with AWS CDK, integrate
-            with existing AWS resources, and incrementally adopt Amplifys
+            with existing AWS resources, and incrementally adopt Amplify's
             capabilities into your workflows.
           </p>
+          <br />
+          <h2 className="text-xl font-bold mb-2">
+            Creating a custom resource:
+          </h2>
+
+          <CodeBlock language="javascript" value={customexp} />
         </motion.section>
+      </motion.main>
+
+      <motion.main className="container mx-auto p-4">
+        <p className="text-2xl md:text-3xl font-bold text-gray-800">
+          Unified Console
+        </p>
+        <p className="text-gray-700 text-lg leading-relaxed mb-4">
+          All branches can be managed in our new Amplify console. The Gen 2
+          Amplify console consolidates the console experiences across Studio and
+          Hosting, providing a single place for you to manage your builds,
+          hosting settings (for example, custom domains), deployed resources
+          (for example, data browser or user management), and environment
+          variables and secrets. Even though you can access deployed resources
+          directly in other AWS service consoles, the Amplify console offers you
+          a direct experience for core categories like Data and Auth.
+        </p>
+        <div className="my-8 flex justify-center">
+          <div className="w-full max-w-5xl">
+            {" "}
+            <div className="relative" style={{ paddingTop: "56.25%" }}>
+              {" "}
+              <video
+                className="absolute top-0 left-0 w-full h-full"
+                controls
+                src="/console.mp4"
+              />
+            </div>
+          </div>
+        </div>
       </motion.main>
 
       <footer className="bg-purple-700 p-4 mt-auto">
