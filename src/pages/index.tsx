@@ -163,7 +163,7 @@ bucket.grantRead(unauthRole);
           </p>
           <br />
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
-            For documentation, please refer to the{" "}
+            For documentation, please refer to the:{" "}
             <a
               href="https://next-docs.amplify.aws/gen2/how-amplify-works/"
               target="_blank"
@@ -172,6 +172,20 @@ bucket.grantRead(unauthRole);
               aria-label="AWS Amplify Gen 2 documentation"
             >
               AWS Amplify Gen 2 documentation
+            </a>
+            .
+          </p>
+
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            Amplify Gen 2 repository:{" "}
+            <a
+              href="https://github.com/aws-amplify/amplify-backend"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              aria-label="AWS Amplify Gen 2 documentation"
+            >
+              AWS Amplify Gen 2 repository
             </a>
             .
           </p>
@@ -325,6 +339,24 @@ bucket.grantRead(unauthRole);
             </div>
           </div>
         </div>
+      </motion.main>
+
+      <motion.main className="container mx-auto p-4">
+        <p className="text-2xl md:text-3xl font-bold text-gray-800">
+          Amplify Gen 2 commands
+        </p>
+        <h2 className="text-xl font-bold mb-2">Create a Amplify app:</h2>
+        <CommandLine command="npm create amplify" />
+        <h2 className="text-xl font-bold mb-2">Running Sandbox</h2>
+        <CommandLine command="npx amplify sandbox" />
+        <h2 className="text-xl font-bold mb-2">
+          Creating a Secret for Sandbox
+        </h2>
+        <CommandLine command="npx amplify sandbox secret <secret-name>" />
+        <h2 className="text-xl font-bold mb-2">Generating client side code</h2>
+        <CommandLine command="npx amplify generate graphql-client-code --stack <stack-name> --out <dir>" />
+        <h2 className="text-xl font-bold mb-2">Generating UI Forms</h2>
+        <CommandLine command="npx amplify generate forms --stack <stack-name> --out <dir>" />
       </motion.main>
 
       <footer className="bg-purple-700 p-4 mt-auto">
