@@ -337,6 +337,9 @@ export const auth = defineAuth({
           <h2 className="text-xl font-bold mt-6 mb-2">
             Creating a Amplify Gen 2 App:
           </h2>
+          <CommandLine
+            command={`npm create next-app -- amplify-demo-app --typescript`}
+          />
           <CommandLine command={createCommand} />
           <br />
           <h2 className="text-xl font-bold mb-2">Project Structure:</h2>
