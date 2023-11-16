@@ -143,7 +143,7 @@ export const auth = defineAuth({
     .model({
       name: a.string(),
       description: a.string(),
-    })
+    }).authorization([a.allow.owner()]);
 });
 
 // Global auth rule
