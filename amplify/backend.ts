@@ -11,8 +11,10 @@ const backend = defineBackend({
   data,
 });
 
+// enable deletion protection
 // backend.resources.auth.resources.cfnResources.userPool.deletionProtection ="ACTIVE";
 
+// enable point in time recovery for all tables
 // Object.values(backend.resources.data.resources.cfnResources.cfnTables).forEach(
 //   (table) => {
 //     table.pointInTimeRecoverySpecification = {
@@ -20,6 +22,8 @@ const backend = defineBackend({
 //     };
 //   }
 // );
+
+//create a custom stack to create a bucket
 
 // const bucketStack = backend.createStack("BucketStack");
 // const bucket = new s3.Bucket(bucketStack, "Bucket", {
@@ -76,14 +80,6 @@ const backend = defineBackend({
 //   }
 // );
 
-// const out = new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-id", {
-//   value: cwRumAppMonitor.ref,
-// });
+// const cfnUserPool = backend.resources.auth.resources.cfnResources.userPool;
 
-// new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-name", {
-//   value: cwRumAppMonitor.name,
-// });
-
-// new cdk.CfnOutput(amplifyRum, "cw-rum-app-monitor-domain", {
-//   value: cwRumAppMonitor.domain,
-// });
+// cfnUserPool.addPropertyOverride("Policies.PasswordPolicy.MinimumLength", 32);

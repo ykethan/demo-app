@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import * as Auth from "@aws-amplify/auth";
 import { useRouter } from "next/router";
@@ -90,7 +91,7 @@ const UserPage = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center">Loading...</div>; // Adjust loading text style if necessary
+    return <div className="text-center">Loading...</div>;
   }
 
   return (

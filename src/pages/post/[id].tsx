@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Link from "next/link";
 import { useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/router";
@@ -148,7 +149,7 @@ query GetComment($id: ID!) {
                   comment.id,
                   error
                 );
-                return comment; // Return the comment without replies in case of an error
+                return comment;
               }
             } else {
               return null;
@@ -173,15 +174,13 @@ query GetComment($id: ID!) {
   const handleCommentSubmit = (
     formData: CommentCreateFormInputValues
   ): CommentCreateFormInputValues => {
-    // Immediately start the asynchronous operation
     postComment(formData);
 
-    // Immediately return formData, satisfying the expected return type
     return formData;
   };
   const postComment = async (formData: CommentCreateFormInputValues) => {
     const { content } = formData;
-    const author = formData.author || user; // Fallback to `user` if `author` is not provided in the form data.
+    const author = formData.author || user;
     const commentData = {
       author,
       content,

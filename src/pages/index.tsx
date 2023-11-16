@@ -40,9 +40,12 @@ export default function HomePage() {
 
 const schema = a.schema({
   Todo: a.model({
-    title: a.string(),
+    name: a.string(),
     description: a.string(),
-    priority: a.enum(['low', 'medium', 'high'])
+    bool: a.boolean().required(),
+    enum: a.enum(["low", "medium", "high"]),
+    date: a.date(),
+    stamp: a.timestamp(),
   })
 });
 
@@ -64,18 +67,18 @@ export const auth = defineAuth({
  `;
 
   const dataFrontend = `
- import { useState, useEffect } from 'react';
-import { generateClient } from 'aws-amplify/data';
-import { Schema } from '@/amplify/data/resource';
-
+import { useState, useEffect } from "react";
+import { generateClient } from "aws-amplify/data";
+import { Schema } from "../../amplify/data/resource";
 // generate your data client using the Schema from your backend
 const client = generateClient<Schema>();
 
 export default function HomePage() {
-  const [todos, setTodos] = useState<Schema['Todo'][]>([]);
+  const [todos, setTodos] = useState<Schema["Todo"][]>([]);
 
   async function listTodos() {
     const { data } = await client.models.Todo.list();
+    console.log(data);
     setTodos(data);
   }
 
@@ -88,12 +91,15 @@ export default function HomePage() {
       <h1>Hello, Amplify 👋</h1>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.name}</li>
+          <li key={todo.id}>
+            {todo.id}: {todo.description} : {todo.id} : {todo.name}
+          </li>
         ))}
       </ul>
     </main>
   );
 }
+
  `;
 
   const customexp = `
@@ -109,6 +115,68 @@ bucket.grantReadWrite(authRole);
 // allow any guest (unauthenticated) user to read from the bucket
 const unauthRole = backend.resources.auth.resources.unauthenticatedUserIamRole;
 bucket.grantRead(unauthRole);
+ `;
+
+  const Authsec = `
+ import { defineAuth, secret } from "@aws-amplify/backend";
+
+export const auth = defineAuth({
+  loginWith: {
+   externalProviders:{
+    loginWithAmazon: {
+      clientId: secret("<Secret-id>"),
+      clientSecret: secret("<Secret>"),
+    }
+   }
+  },
+});
+
+ `;
+
+  const dataAuth = `
+ // Data model with auth rules at field level
+ description: a.string().authorization([a.allow.owner()])
+
+ // Data model with auth rules at model level
+ const schema = a.schema({
+  Todo: a
+    .model({
+      name: a.string(),
+      description: a.string(),
+    })
+});
+
+// Global auth rule
+const schema = a
+  .schema({
+    Todo: a.model({
+      name: a.string(),
+      description: a.string(),
+    }),
+  }).authorization([a.allow.owner()]);
+ `;
+
+  const authcustom = `
+ import { defineAuth } from "@aws-amplify/backend";
+
+export const auth = defineAuth({
+  loginWith: {
+    phone: true,
+  },
+  userAttributes: {
+    preferredUsername: {
+      mutable: true,
+      required: true,
+    },
+  },
+  multifactor: {
+    mode: "OPTIONAL",
+    sms: true,
+  },
+  // Lambda triggers
+  // Account recovery
+});
+
  `;
 
   return (
@@ -200,7 +268,6 @@ bucket.grantRead(unauthRole);
             />
           </div>
         )}
-
         <motion.section
           variants={sectionVariants}
           transition={{ duration: 0.8 }}
@@ -226,7 +293,6 @@ bucket.grantRead(unauthRole);
             </li>
           </ul>
         </motion.section>
-
         {imageUrls[1] && (
           <div className="flex justify-center my-8">
             <Image
@@ -237,7 +303,6 @@ bucket.grantRead(unauthRole);
             />
           </div>
         )}
-
         {imageUrls[2] && (
           <div className="flex justify-center my-8">
             <Image
@@ -248,7 +313,6 @@ bucket.grantRead(unauthRole);
             />
           </div>
         )}
-
         <motion.section
           variants={sectionVariants}
           transition={{ duration: 0.8 }}
@@ -267,7 +331,6 @@ bucket.grantRead(unauthRole);
             </ul>
           </ul>
         </motion.section>
-
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Structure and Commands</h1>
 
@@ -279,18 +342,39 @@ bucket.grantRead(unauthRole);
           <h2 className="text-xl font-bold mb-2">Project Structure:</h2>
           <CodeBlock language="text" value={sampleCode} />
         </div>
-
         <h2 className="text-xl font-bold mb-2">Running Sandbox:</h2>
         <CommandLine command={sandboxCommand} />
-
-        <h2 className="text-xl font-bold mb-2">Data and Auth configuration:</h2>
+        <h2 className="text-xl font-bold mb-2">Data configuration:</h2>
         <CodeBlock language="javascript" value={dataexp} />
-        <CodeBlock language="javascript" value={authexp} />
-
+        <p className="text-gray-700 text-lg leading-relaxed mb-4">
+          For a full list of supported types, see the{" "}
+          <a
+            href="https://next-docs.amplify.aws/gen2/build-a-backend/data/data-modeling/add-fields/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 visited:text-purple-600"
+            aria-label="AWS Amplify Gen 2 documentation"
+          >
+            AWS Amplify Gen 2 Data documentation
+          </a>
+          .
+        </p>
+        <h3 className="text-xl font-bold mb-2">Data auth rules:</h3>
+        <CodeBlock language="javascript" value={dataAuth} />
         <h2 className="text-xl font-bold mb-2">
-          Acessing Data on your frontend:
+          Accessing Data on your frontend:
         </h2>
         <CodeBlock language="javascript" value={dataFrontend} />
+        <h2 className="text-xl font-bold mb-2">Auth configuration:</h2>
+        <CodeBlock language="javascript" value={authexp} />
+        <h2 className="text-xl font-bold mb-2">Customizing Auth resource:</h2>
+        <CodeBlock language="javascript" value={authcustom} />
+        <h2 className="text-xl font-bold mb-2">
+          Auth with external providers and secrets:
+        </h2>
+        <CommandLine command="npx amplify sandbox secret set <secret-name>" />
+        <CodeBlock language="javascript" value={Authsec} />
+
         <motion.section
           variants={sectionVariants}
           transition={{ duration: 0.8 }}
@@ -309,6 +393,20 @@ bucket.grantRead(unauthRole);
           </h2>
 
           <CodeBlock language="javascript" value={customexp} />
+
+          <h2 className="text-xl font-bold mb-2">
+            Interact with Amplify resources and CDK constructs:
+          </h2>
+          <CodeBlock
+            language="javascript"
+            value={` backend.resources.auth.resources.cfnResources.userPool.deletionProtection ="ACTIVE";`}
+          />
+          <CodeBlock
+            language="javascript"
+            value={`
+          const cfnUserPool = backend.resources.auth.resources.cfnResources.userPool;
+cfnUserPool.addPropertyOverride("Policies.PasswordPolicy.MinimumLength", 32);`}
+          />
         </motion.section>
       </motion.main>
 
@@ -349,10 +447,8 @@ bucket.grantRead(unauthRole);
         <CommandLine command="npm create amplify" />
         <h2 className="text-xl font-bold mb-2">Running Sandbox</h2>
         <CommandLine command="npx amplify sandbox" />
-        <h2 className="text-xl font-bold mb-2">
-          Creating a Secret for Sandbox
-        </h2>
-        <CommandLine command="npx amplify sandbox secret <secret-name>" />
+        <h2 className="text-xl font-bold mb-2">Secrets in Sandbox</h2>
+        <CommandLine command="npx amplify sandbox secret set|remove|get|list <secret-name>" />
         <h2 className="text-xl font-bold mb-2">Generating client side code</h2>
         <CommandLine command="npx amplify generate graphql-client-code --stack <stack-name> --out <dir>" />
         <h2 className="text-xl font-bold mb-2">Generating UI Forms</h2>
