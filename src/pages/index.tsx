@@ -233,7 +233,7 @@ export const auth = defineAuth({
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
             For documentation, please refer to the:{" "}
             <a
-              href="https://next-docs.amplify.aws/gen2/how-amplify-works/"
+              href="https://next-docs.amplify.aws/gen2/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 visited:text-purple-600"
