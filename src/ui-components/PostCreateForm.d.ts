@@ -19,11 +19,15 @@ export declare type PostCreateFormInputValues = {
     author?: string;
     title?: string;
     content?: string;
+    createdAt?: string;
+    updatedAt?: string;
 };
 export declare type PostCreateFormValidationValues = {
     author?: ValidationFunction<string>;
     title?: ValidationFunction<string>;
     content?: ValidationFunction<string>;
+    createdAt?: ValidationFunction<string>;
+    updatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostCreateFormOverridesProps = {
@@ -31,6 +35,8 @@ export declare type PostCreateFormOverridesProps = {
     author?: PrimitiveOverrideProps<TextFieldProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
+    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
+    updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostCreateFormProps = React.PropsWithChildren<{
     overrides?: PostCreateFormOverridesProps | undefined | null;
