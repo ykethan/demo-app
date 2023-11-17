@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Comment } from "../../graphql/types";
+import { Comment } from "./graphql/types";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -19,16 +19,22 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type CommentUpdateFormInputValues = {
     author?: string;
     content?: string;
+    createdAt?: string;
+    updatedAt?: string;
 };
 export declare type CommentUpdateFormValidationValues = {
     author?: ValidationFunction<string>;
     content?: ValidationFunction<string>;
+    createdAt?: ValidationFunction<string>;
+    updatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CommentUpdateFormOverridesProps = {
     CommentUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
+    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
+    updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CommentUpdateFormProps = React.PropsWithChildren<{
     overrides?: CommentUpdateFormOverridesProps | undefined | null;
